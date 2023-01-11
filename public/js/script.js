@@ -3,7 +3,7 @@ const btn = document.querySelector('#achievement');
 const getAchievements = async () => {
     try {
         // call web server api
-        const res = await fetch('/achievements');
+        const res = await fetch('/api/achievements');
         const data = await res.json();
         // see data before manipulating it
         console.log(data);
