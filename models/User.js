@@ -27,6 +27,7 @@ User.init(
     steam_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      // steam ID are always 17 characters
       validate: {
         len: [17, 17],
       },
