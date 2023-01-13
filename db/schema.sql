@@ -1,2 +1,2 @@
-DROP DATABASE IF EXISTS user_db;
-USE user_db;
+DROP DATABASE IF EXISTS users;
+USE users;
