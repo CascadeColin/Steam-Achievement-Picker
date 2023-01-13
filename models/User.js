@@ -22,20 +22,20 @@ User.init(
       unique: true,
       validate: {
         isEmail: true,
-      }, 
+      },
     },
     steam_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        len: [17],
+        len: [17, 17],
       },
     },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        len: [8],
+        min: 8,
       },
     },
   },
