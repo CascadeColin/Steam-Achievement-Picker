@@ -1,5 +1,4 @@
 const { Model, DataTypes } = require("sequelize");
-const bcrypt = require("bcrypt");
 const sequelize = require("../config/connection");
 
 class feedback extends Model {}
@@ -27,16 +26,16 @@ feedback.init(
       type: DataTypes.INTEGER,
       // id for the game and also the model name for the games
       references: {
-        model: "",
-        key: "",
+        model: "ownedGames",
+        key: "appid",
       },
     },
     achievment_id: {
       type: DataTypes.INTEGER,
       references: {
         // id for the achivement and also the model name for the achivements
-        model: "",
-        key: "",
+        model: "Achievement",
+        key: "id",
       },
     },
   },

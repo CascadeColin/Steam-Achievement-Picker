@@ -1,23 +1,26 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../config/connection");
 
-class ownedGames extends Model {}
+class Achievements extends Model {}
 
-ownedGames .init(
+Achievements.init(
     {
-      appid: {
+      id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
+        autoIncrement: true,
       },
-      gamename: {
+      achievement_name: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      // allows us to display games on main page based on most recently played games.  time is in unix timestamp.  will decide with nathan/marie how/if to use this but might as well store it for now
-      last_played: {
+      game_id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        references: {
+          model: "ownedGames",
+          key: "appid",
+        },
       },
     },
     {
@@ -25,8 +28,8 @@ ownedGames .init(
       timestamps: false,
       freezeTableName: true,
       underscored: true,
-      modelName: "ownedGames",
+      modelName: "oAchievements",
     }
   );
 
-module.exports = ownedGames;
+module.exports = Achievements;
