@@ -2,13 +2,15 @@ const { Model, DataTypes } = require("sequelize");
 const bcrypt = require("bcrypt");
 const sequelize = require("../config/connection");
 
-class User extends Model {
+// changed every model to singular instead of plural - we had a lot of bugs (mixing "user" and "users", for example).  Keeping it all to no "s" at the end.
+
+class user extends Model {
   checkPassword(loginPw) {
     return bcrypt.compareSync(loginPw, this.password);
   }
 }
 
-User.init(
+user.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -24,6 +26,13 @@ User.init(
         isEmail: true,
       },
     },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        min: 8,
+      },
+    },
     steam_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -32,34 +41,25 @@ User.init(
         len: [17, 17],
       },
     },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        min: 8,
-      },
-    },
   },
   {
     hooks: {
-      async beforeCreate(newUserData) {
-        newUserData.password = await bcrypt.hash(newUserData.password, 10);
-        return newUserData;
+      async beforeCreate(newuserData) {
+        newuserData.password = await bcrypt.hash(newuserData.password, 10);
+        return newuserData;
       },
-      async beforeUpdate(updatedUserData) {
-        updatedUserData.password = await bcrypt.hash(
-          updatedUserData.password,
-          10
-        );
-        return updatedUserData;
+      async beforeUpdate(updateduserData) {
+        updateduserData.password = await bcrypt.hash(updateduserData.password, 10);
+        return updateduserData;
       },
     },
     sequelize,
-    timestamps: false,
+    // can use timestamps on feedback and doesn't hurt us to store it
+    timestamps: true,
     freezeTableName: true,
     underscored: true,
     modelName: "user",
   }
 );
 
-module.exports = User;
+module.exports = user;
