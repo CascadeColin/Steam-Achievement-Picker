@@ -1,41 +1,49 @@
-const User = require("./User");
-const ownedGames = require("./OwnedGames");
+const user = require("./user");
+const ownedGame = require("./ownedGame");
 const feedback = require("./feedback");
-const Achievements = require("./Achievement");
+const achievement = require("./achievement");
 
-User.hasMany(ownedGames, { 
-    foreignKey: 'userId',
-    onDelete: "CASCADE", 
+// user has many ownedGames (1:N)
+// ownedGames has many achievement (1:N)
+// achievement has many feedback (1:N)
+// user has many feedback (1:N)
+
+// changed every model to singular instead of plural - we had a lot of bugs (mixing "user" and "users", for example).  Keeping it all to no "s" at the end.
+
+user.hasMany(ownedGame, { 
+    foreignKey: 'user_id',
+    onDelete: 'CASCADE', 
 });
 
-ownedGames.belongsTo(User, { 
-    foreignKey: 'userId' 
+ownedGame.belongsTo(user, { 
+    foreignKey: 'user_id',
 });
 
-ownedGames.hasMany(Achievements, {
-    foreignKey: "game_id"
-});
-Achievements.belongsTo(ownedGames, {
-    foreignKey: "game_id"
+ownedGame.hasMany(achievement, {
+    foreignKey: 'game_id',
+    onDelete: 'CASCADE',
 });
 
-User.hasMany(feedback, {
+achievement.belongsTo(ownedGame, {
+    foreignKey: 'game_id',
+});
+
+user.hasMany(feedback, {
+    foreignKey: 'user_id',
+    onDelete: 'CASCADE',
+});
+
+feedback.belongsTo(user, {
     foreignKey: "user_id",
-    onDelete: "CASCADE",
 });
 
-feedback.belongsTo(User, {
-    foreignKey: "user_id",
+achievement.hasMany(feedback, {
+    foreignKey: 'achievement_id',
+    onDelete: 'CASCADE',
 });
 
-Achievements.hasMany(feedback, {
-    foreignKey: "achievement_id",
+feedback.belongsTo(achievement, {
+    foreignKey: 'achievement_id',
 });
 
-feedback.belongsTo(Achievements, {
-    foreignKey: "achievement_id",
-});
-
-
-
-module.exports = { User, ownedGames, feedback, Achievements };
+module.exports = { user, ownedGame, feedback, achievement };
