@@ -6,7 +6,6 @@ buttonName.on("click", function(){
     var steamid = $("theClassOrId");
     steamid = steamid .val().trim();
     //TODO:call the fuction after login or signup button has been clicked
-
 })
 
 function UserData(){
@@ -16,14 +15,15 @@ function UserData(){
        return response.json();
     })
     .then(function (data) {
+        //demo
         //just to show how to get data from the api
          SteamID = data.response.players.steamid;
     })
 }
 
-//gets the appid for each game
+//gets the appid for each game, the name of the game and also the achievemnts for each game both completed and uncompleted
 function UsersGameData(){
-    var queryURL = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key="+apikey+"&steamid="+steamid+"&format=jsonArguments";
+    var queryURL = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key="+apikey+"&steamid="+steamid+"&format=jsonArguments&include_appinfo=true";
     fetch(queryURL)
     .then(function(response){
        return response.json();
@@ -35,31 +35,32 @@ function UsersGameData(){
          const gamesAppId =Array(gameCount).fill(null)
         for(var i = 0; i <  gameCount; i++){
             gamesAppId[i] = data.response.games[i].appid;
+            gamesName[i] = data.response.games[i].name;
+            return gamesAppId[i];
         }
     })
-}
-
-//gets the name of the game and achievemnts for each game both completed and uncompleted
-function GameData(){
-    var queryURL = "http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid="+appid+"key="+apikey+"&steamid="+steamid;
-    fetch(queryURL)
-    .then(function(response){
-       return response.json();
-    })
-    .then(function (data) {
-        GameName = data.playerstats.gameName;
-        achievementCount = data.playerstats.achievements.lenght;
-        const achievementscompletedname =[];
-        const achievementsuncompletedname = [];
-        for(var i = 0; i <  achievementCount; i++){
-            if (data.playerstats.achievements[i].achieved === 1) {
-                achievementCompleted = achievementCompleted + 1;
-                achievementscompletedname[i] = data.playerstats.achievements[i].apiname;
-            } else {
-                achievementsUncompleted = achievementsUncompleted + 1;
-                achievementsuncompletedname[i] = data.playerstats.achievements[i].apiname
-            }
-        }
+    .then(function (gamesAppId) {
+        gamesAppId.forEach( appID => {
+            var queryURL = "http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid="+appID+"key="+apikey+"&steamid="+steamid;
+            fetch(queryURL)
+            .then(function(response){
+               return response.json();
+            })
+            .then(function (data) {
+                achievementCount = data.playerstats.achievements.lenght;
+                const achievementscompletedname =[];
+                const achievementsuncompletedname = [];
+                for(var i = 0; i <  achievementCount; i++){
+                    if (data.playerstats.achievements[i].achieved === 1) {
+                        achievementCompleted = achievementCompleted + 1;
+                        achievementscompletedname[i] = data.playerstats.achievements[i].apiname;
+                    } else {
+                        achievementsUncompleted = achievementsUncompleted + 1;
+                        achievementsuncompletedname[i] = data.playerstats.achievements[i].apiname
+                    }
+                }
+            })
+        });
     })
 }
 
@@ -90,7 +91,6 @@ function FriendsSteamID(){
                 friendsname.push(data.response.players.personaname)
             })
         });
-
     })
 }
 
