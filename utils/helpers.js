@@ -9,8 +9,12 @@ module.exports = {
     // Steam API will return status 200 when working, and status 300-500 if it's down.
     checkStatus: (res) => {
         // res.status is between 200 and 299
-        if (res.ok) res; 
+        if (res.ok) {
+            return res;
+        } 
         // res.status provides the status code (i.e. 404), res.statusText provides description (i.e. "Not Found")
-        alert(`Steam API error: ${res.status} ${res.statusText}`);
+        else {
+            res.status(400).json(`Steam API error: ${res.status} ${res.statusText}`);
+        }
     }
 };
