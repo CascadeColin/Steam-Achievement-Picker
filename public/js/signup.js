@@ -2,9 +2,7 @@ const signupFormHandler = async (event) => {
     event.preventDefault();
   
     const email = document.querySelector("#email-signup").value.trim();
-    // HTML form inputs return strings, but we need a number
-    const steamidNum = document.querySelector("#steamid-signup").value.trim();
-    const steamid = parseInt(steamidNum);
+    const steamid = document.querySelector("#steamid-signup").value.trim();
     const password = document.querySelector("#password-signup").value.trim();
 
     console.log(typeof email, email, typeof password, password, typeof steamid, steamid)
