@@ -1,0 +1,30 @@
+<!-- NICE TO HAVE: an option to see all achievements -->
+<div>
+<button type="submit" class="btn">List All Achievements</button>
+</div>
+<!-- NICE TO HAVE: a way to filter list of achievements by game > could populate list of owned games into a dropdown -->
+<div>
+  <select id="owned-games-dropdown" class="text-dropdowns">
+    <option value="" disabled selected>Filter By Game</option>
+  </select>
+</div>
+
+<!-- use a partial here for list of achievements by game? -->
+{{> achievements-by-game}}
+
+
+{{#each achievements as |achievement|}}
+  <div class="my-achievements-container">
+    <div>
+      <h3>{{achievement.name}}</h3>
+    </div>
+    <div>
+        <!-- do we want to add an Add Note button or just make the achievement name a button? -->
+      <button type="submit" class="btn">Add Note</button>
+    </div>
+  </div>
+{{/each}}
+
+{{#if loggedIn}}
+<script src="/js/gamesdropdown.js"></script>
+{{/if}}
