@@ -21,29 +21,67 @@
     <title>Steam Achievement Picker</title>
   </head>
 
-
-  
   <body>
     <div>
       <header>
-        <h1 class="text-3xl font-bold underline">
-          <a href="/">Vapour</a>
-        </h1>
-        <nav>
-          {{#if loggedIn}}
-          <a href="/dashboard">My Achievements</a>
-          <button id="logout">Logout</button>
-          {{else}}
-          <a href="/login">Login</a>
-          {{/if}}
+        <nav
+          class="flex items-center justify-between flex-wrap bg-slate-500 p-6"
+        >
+          <h1 class="font-semibold text-slate-50 text-3xl tracking-tight">
+            <a href="/">Vapour</a>
+          </h1>
+
+          <!-- need to add div  -->
+          <div class="justify-end">
+            <!-- {{#if loggedIn}} -->
+            <a
+              href="/dashboard"
+              class="block mt-4 lg:inline-block lg:mt-0 text-slate-200 hover:text-white mr-4"
+              >My Achievements</a
+            >
+            <button
+              id="logout"
+              class="block mt-4 lg:inline-block lg:mt-0 text-slate-200 hover:text-white mr-4"
+            >
+              Logout
+            </button>
+            <!-- {{else}} -->
+            <a
+              href="/login"
+              class="block mt-4 lg:inline-block lg:mt-0 text-slate-200 hover:text-white mr-4"
+              >Login</a
+            >
+            <!-- {{/if}} -->
+          </div>
         </nav>
       </header>
 
-      <main>{{{body}}}</main>
+      <main>
+        <!-- {{{body}}} -->
+      </main>
+
+
+      <!-- login  -->
+
+
+
+
+
+      <!-- sign up  -->
+
+
+
+      
+      <!-- dashboard  -->
+
+
+
+
+
     </div>
 
-    {{#if loggedIn}}
+    <!-- {{#if loggedIn}} -->
     <script src="/js/logout.js"></script>
-    {{/if}}
+    <!-- {{/if}} -->
   </body>
 </html>
