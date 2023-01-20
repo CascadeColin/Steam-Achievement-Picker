@@ -32,8 +32,8 @@ user.init(
       },
     },
     steam_id: {
-      // must use BIGINT because steamid numbers are larger than maximum INTEGER size
-      type: DataTypes.BIGINT,
+      // JS doesn't like numbers larger than 16.  Attempting to bypass treating as a string.
+      type: DataTypes.STRING,
       allowNull: false,
       // steam ID are always 17 characters
       validate: {
