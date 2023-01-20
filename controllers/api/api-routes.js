@@ -10,6 +10,13 @@ const { checkStatus } = require("../../utils/helpers");
 const appid = 236850;
 const steamid = 76561198142429533;
 
+//TODO:After login/signup the steamid for the user should be gotten from the input
+buttonName.on("click", function(){
+  var steamid = $("theClassOrId");
+  steamid = steamid .val().trim();
+  //TODO:call the fuction after login or signup button has been clicked
+})
+
 // TODO: will add middleware to check for logged in state once I get the calls working
 
 // get player achievements
