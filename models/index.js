@@ -1,4 +1,4 @@
-const user = require("./user");
+const user = require("./User");
 const ownedGame = require("./ownedGame");
 const feedback = require("./feedback");
 const achievement = require("./achievement");
