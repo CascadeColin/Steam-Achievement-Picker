@@ -4,11 +4,12 @@ const sequelize = require("../../config/connection");
 const fetch = require("node-fetch");
 require("dotenv").config();
 // checks fetch request status, sends alert if Steam API is not behaving as expected, otherwise returns its input (works similar to middleware)
-const { checkStatus } = require("../../utils/helpers");
+// FIXME: currently broken
+// const { checkStatus } = require("../../utils/helpers");
 
 //TODO: dynamically apply appid and steamid to fetch URL. Use these consts for testing only.
-const appid = 236850;
-const steamid = 76561198142429533;
+const appid = "236850";
+const steamid = "76561198142429533";
 
 //TODO:After login/signup the steamid for the user should be gotten from the input
 //FIXME: this broke the server.  it also needs to be in the front-end code

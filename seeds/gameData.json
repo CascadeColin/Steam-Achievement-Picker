@@ -1,0 +1,22 @@
+[
+    {
+        "appid": "1",
+        "name": "Game 1",
+        "img_icon_url": "746d1cd48fb2e57d579b05b6e9eccba95859e549"
+    },
+    {
+        "appid": "2",
+        "name": "Game 2",
+        "img_icon_url": "1711fd8c46d739feec76bd4a64eaeeca5b87e3a7"
+    },
+    {
+        "appid": "3",
+        "name": "Game 3",
+        "img_icon_url": "7775d52b50f38367aeaeedad5d6d235da34a3c1f"
+    },
+    {
+        "appid": "4",
+        "name": "Game 4",
+        "img_icon_url": "fbe80c4743e226f0bf65559c91b12953d4446808"
+    }
+]
