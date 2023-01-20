@@ -1,2 +1,3 @@
-DROP DATABASE IF EXISTS users;
-USE users;
+DROP DATABASE IF EXISTS vapour;
+CREATE DATABASE vapour;
+USE vapour;
