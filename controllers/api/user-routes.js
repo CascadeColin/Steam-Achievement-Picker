@@ -7,10 +7,13 @@ const fetch = require("node-fetch");
 router.post("/signup", async (req, res) => {
   try {
     const dbUserData = await user.create({
-      steam_id: req.body.steam_id,
       email: req.body.email,
       password: req.body.password,
+      steam_id: req.body.steamid,
     });
+
+    // take user data and fetch ownedgames and achievements, then store in db
+
     req.session.save(() => {
       req.session.loggedIn = true;
 
