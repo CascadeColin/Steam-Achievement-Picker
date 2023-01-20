@@ -29,6 +29,7 @@ user.init(
     password: {
       type: DataTypes.STRING,
       allowNull: false,
+      // steam ID are always 17 characters
       validate: {
         min: 8,
       },

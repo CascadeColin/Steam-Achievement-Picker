@@ -24,7 +24,7 @@ router.get("/achievements", async (req, res) => {
   fetch(
     `http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid=${appid}&key=${process.env.API_KEY}&steamid=${steamid}`
   )
-    .then(checkStatus)
+    // .then(checkStatus)
     .then((res) => res.json())
     .then((data) => res.status(200).json(data));
 });
@@ -34,7 +34,7 @@ router.get("/ownedgames", async (req, res) => {
   fetch(
     `http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${process.env.API_KEY}&steamid=${steamid}&format=json&include_appinfo=true&`
   )
-    .then(checkStatus)
+    // .then(checkStatus)
     .then((res) => res.json())
     .then((data) => res.status(200).json(data));
 });
@@ -44,7 +44,7 @@ router.get("/gamenews", async (req, res) => {
   fetch(
     `http://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=${appid}&count=3&maxlength=300&format=json`
   )
-    .then(checkStatus)
+    // .then(checkStatus)
     .then((res) => res.json())
     .then((data) => res.status(200).json(data));
 });
@@ -54,7 +54,7 @@ router.get("/friends", async (req, res) => {
   fetch(
     `http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=${process.env.API_KEY}&steamid=${steamid}&relationship=friend`
   )
-    .then(checkStatus)
+    // .then(checkStatus)
     .then((res) => res.json())
     .then((data) => res.status(200).json(data));
 });
