@@ -32,7 +32,7 @@ achievement.init(
       type: DataTypes.INTEGER,
       references: {
         model: "ownedGame",
-        key: "appid",
+        key: "id",
       },
     },
   },
