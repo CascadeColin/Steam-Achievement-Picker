@@ -18,12 +18,13 @@
 
       <div>
         <label for="steamid-signup">Steam ID</label>
-        <input id="steamid-signup" type="integer" />
+        {{!-- "type="integer" doesn't exist in HTML.  Let's try to add back in minlength="17" and maxlength="17" once this can be navigated (my idea for forcing the input to be exactly 17 numbers)--}}
+        <input id="steamid-signup"/>
       </div>
 
       <div>
         <label for="password-signup">Password</label>
-        <input id="password-signup"type="password" />
+        <input id="password-signup" type="password" />
       </div>
 
       <button type="submit">Sign Up</button>
