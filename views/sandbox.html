@@ -21,6 +21,9 @@
     <title>Steam Achievement Picker</title>
   </head>
 
+
+
+<!------------------------------------------ FOR MAIN.HANDLEBARS  -->
   <body>
     <div>
       <header>
@@ -67,61 +70,97 @@
 
 
 
-<!-------------------------------- login  -->
-<div class="flex">
-    <div>
-        <div>
-          <h2>Login</h2>
-        </div>
-        <!-- put the form in a div  -->
-        <div>
-            <div class="w-full max-w-xs">
-                <form
-                  class="login-form bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-                >
-                  <div class="mb-4">
+<!------------------------------------------ FOR LOGIN.HANDLEBARS  -->
+<div>
+    <!-- put the form in a div  -->
+    <div class="flex flex-col justify-center items-center">
+        <div class="w-full max-w-xl">
+            <form class="login-form bg-white shadow-lg rounded-lg px-8 pt-3 pb-8 mb-4 mt-10">
+                <h2 class="flex justify-center text-xl font-semibold border-b-2 pb-2">Login</h2>
+                <div class="mt-4 mb-4">
                     <label for="email-login">Email</label>
-                    <input
-                      type="email"
-                      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                      placeholder="Email"
-                    />
-                  </div>
-      
-                  <div class="mb-5">
+                    <input type="email"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        placeholder="Email" />
+                </div>
+
+                <div class="mb-5">
                     <label for="password-login">Password</label>
-                    <input
-                      type="password"
-                      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                      placeholder="******************"
-                    />
-                  </div>
-      
-                  <!-- put button and sign up option in a div  -->
-                  <div class="flex items-center justify-between">
-                    <button
-                      type="submit"
-                      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                    >
-                      Login
+                    <input type="password"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        placeholder="******************" />
+                </div>
+
+                <!-- put button and sign up option in a div  -->
+                <div class="flex items-center justify-between">
+                    <button type="submit"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        Login
                     </button>
-                    <a
-                      href="/signup"
-                      class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-                      >Sign up instead</a
-                    >
-                  </div>
-                </form>
-              </div>
-            </div>
+                    <a href="/signup"
+                        class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Sign
+                        up instead</a>
+                </div>
+            </form>
         </div>
+    </div>
 </div>
-      
-        
 
-<!----------------------------- sign up  -->
 
-<!----------------------------- dashboard  -->
+
+
+<!------------------------------------------ FOR SIGNUP.HANDLEBARS  -->
+<div>
+    <div>
+        <h2>Sign Up</h2>
+    </div>
+
+    <div>
+        <form class="signup-form">
+            
+            <div>
+                <label for="email-signup">Email</label>
+                <input id="email-signup" type="email" />
+            </div>
+
+            <div>
+                <label for="steamid-signup">Steam ID</label>
+                {{!-- "type="integer" doesn't exist in HTML. Let's try to add back in minlength="17" and maxlength="17"
+                once this can be navigated (my idea for forcing the input to be exactly 17 numbers)--}}
+                <input id="steamid-signup" />
+            </div>
+
+            <div>
+                <label for="password-signup">Password</label>
+                <input id="password-signup" type="password" />
+            </div>
+
+            <button type="submit">Sign Up</button>
+            <a href="/login">Login instead</a>
+
+        </form>
+    </div>
+</div>
+
+<script src="/js/signup.js"></script>
+
+
+
+
+
+
+
+<!------------------------------------------ FOR DASHBOARD.HANDLEBARS  -->
+
+
+
+
+
+
+
+
+
+
 
 
 
