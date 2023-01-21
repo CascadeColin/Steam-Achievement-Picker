@@ -5,10 +5,15 @@ class ownedGame extends Model {}
 
 ownedGame.init(
     {
-      appid: {
+      id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
+        autoIncrement: true,
+      },
+      appid: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
       },
       name: {
         type: DataTypes.STRING,
