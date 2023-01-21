@@ -15,6 +15,8 @@ router.post("/signup", async (req, res) => {
 
     /* take user data and fetch ownedgames and achievements, then store in db */
 
+/* start ownedGame autoseeding */
+
     // fetch owned games by provided steamid
     const dbGameData = await fetch(
       "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" +
@@ -58,6 +60,32 @@ router.post("/signup", async (req, res) => {
         user_id: id
       });
     }
+/* end of ownedGame autoseeding */
+/* start achievements autoseeding */
+// FIXME:  currently does not work, but it shouldn't break the server.  will work on this when i get home later tonight - Colin
+
+    //get appid for each ownedGame by newly created user id
+    const arrayOfClasses = await ownedGame.findAll({
+      where: {
+        user_id: id
+      }
+    });
+
+    // map over the array of sequelize objects to get appid for each game
+    // TODO: appidArr is an array that contains the appids as primitive values
+    const appidArr = arrayOfClasses.map(games => games.dataValues.appid);
+
+    // for each appid, fetch GetPlayerAchievements 
+    const newarr = appidArr.forEach(async (appid) => {
+      const dbAchievementData = await fetch(`http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid=236850&key=${process.env.API_KEY}&steamid=${req.body.steamid}`)
+      .then(res => res.json())
+      .then(data => data)
+      return dbAchievementData;
+    });
+
+    console.dir(newarr);
+    
+    // create db entries in achievements table
 
     // set logged in state to true and save to session cookie
     req.session.save(() => {
