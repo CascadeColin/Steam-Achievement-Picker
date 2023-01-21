@@ -31,6 +31,7 @@ router.post("/signup", async (req, res) => {
     const { games } = response;
 
     // remove unused parts of the objects within games array, returning a new array seedData
+    // can re-integrate this data later on by removing its delete command here and updating the ownedGame model to include a column for it
     const seedData = games.map((game) => {
       delete game.playtime_forever;
       delete game.has_community_visible_stats;
@@ -40,8 +41,6 @@ router.post("/signup", async (req, res) => {
       delete game.rtime_last_played;
       return game;
     });
-
-    console.dir(seedData);
 
     // get user_id of the user we just created
     const userId = await user.findOne({
