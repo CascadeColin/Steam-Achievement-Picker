@@ -8,34 +8,35 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Steam Achievement Picker</title>
   </head>
-  <body>
+
+  <body class="bg-gray-50">
     <div>
       <header>
-        
         <nav class="flex items-center justify-between flex-wrap bg-slate-500 p-6">
           <h1 class="font-semibold text-slate-50 text-3xl tracking-tight">
             <a href="/">Vapour</a>
           </h1>
-
+  
           <div class="justify-end">
             {{#if loggedIn}}
-            <a href="/achievements" class="block mt-4 lg:inline-block lg:mt-0 text-slate-200 hover:text-white mr-4">My Achievements</a>
-            <button id="logout" class="block mt-4 lg:inline-block lg:mt-0 text-slate-200 hover:text-white mr-4">Logout</button>
+            <a href="/achievements" class="block mt-4 lg:inline-block lg:mt-0 text-slate-200 hover:text-white mr-4">My
+              Achievements</a>
+            <button id="logout"
+              class="block mt-4 lg:inline-block lg:mt-0 text-slate-200 hover:text-white mr-4">Logout</button>
             {{else}}
             <a href="/login" class="block mt-4 lg:inline-block lg:mt-0 text-slate-200 hover:text-white mr-4">Login</a>
             {{/if}}
           </div>
-
-          
         </nav>
       </header>
+  
       <main>
         {{{body}}}
       </main>
     </div>
-
+  
     {{#if loggedIn}}
-      <script src="/js/logout.js"></script>
+    <script src="/js/logout.js"></script>
     {{/if}}
   </body>
 
