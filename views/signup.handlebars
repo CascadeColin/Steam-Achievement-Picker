@@ -1,34 +1,35 @@
-<div>
-  <div>
-    <h2>Sign Up</h2>
-  </div>
-
-  <div>
-    <form class="signup-form">
-      {{!-- <div>
-        <label for="username-signup">Username</label>
-        <input type="text" />
-      </div> --}}
-
-      {{! -------- Div for email? ----------}}
-      <div>
+<div class="flex flex-col justify-center items-center">
+  <div class="w-full max-w-xl">
+    <form class="signup-form bg-white shadow-lg rounded-lg px-8 pt-3 pb-8 mb-4 mt-10">
+      <h2 class="flex justify-center text-xl font-semibold border-b-2 pb-2">Sign Up</h2>
+      <div class="mt-4 mb-5">
         <label for="email-signup">Email</label>
-        <input id="email-signup" type="email" />
-      </div> 
+        <input id="email-signup" type="email"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          placeholder="Email" />
+      </div>
 
-      <div>
+      <div class="mt-4 mb-5">
         <label for="steamid-signup">Steam ID</label>
-        {{!-- "type="integer" doesn't exist in HTML.  Let's try to add back in minlength="17" and maxlength="17" once this can be navigated (my idea for forcing the input to be exactly 17 numbers)--}}
-        <input id="steamid-signup"/>
+        <input id="steamid-signup"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          placeholder="Steam ID" />
       </div>
 
-      <div>
+      <div class="mt-4 mb-5">
         <label for="password-signup">Password</label>
-        <input id="password-signup" type="password" />
+        <input id="password-signup" type="password"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          placeholder="******************" />
       </div>
 
-      <button type="submit">Sign Up</button>
-      <a href="/login">Login instead</a>
+      <div class="flex items-center justify-between">
+        <button type="submit"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Sign
+          Up</button>
+        <a href="/login" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Login
+          instead</a>
+      </div>
 
     </form>
   </div>
