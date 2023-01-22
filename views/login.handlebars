@@ -1,28 +1,35 @@
 <div>
-  <div>
-    <h2>Login</h2>
-  </div>
+    <div class="flex flex-col justify-center items-center">
+        <div class="w-full max-w-xl">
+            <form class="login-form bg-white shadow-lg rounded-lg px-8 pt-3 pb-8 mb-4 mt-10">
+                <h2 class="flex justify-center text-xl font-semibold border-b-2 pb-2">Login</h2>
+                <div class="mt-4 mb-5">
+                    <label for="email-login">Email</label>
+                    <input type="email"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        placeholder="Email" />
+                </div>
 
-  <form class="login-form">
-    {{!-- <div>
-      <label>Username</label>
-      <input type="text"/>
-    </div> --}}
+                <div class="mb-5">
+                    <label for="password-login">Password</label>
+                    <input type="password"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        placeholder="******************" />
+                </div>
 
-    <div>
-      <label for="email-login">Email</label>
-      <input id="email-login" type="email"/>
-    </div> 
-
-    <div>
-      <label for="password-login">Password</label>
-      <input id="password-login" type="password"/>
+                <!-- put button and sign up option in a div  -->
+                <div class="flex items-center justify-between">
+                    <button type="submit"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        Login
+                    </button>
+                    <a href="/signup"
+                        class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Sign
+                        up instead</a>
+                </div>
+            </form>
+        </div>
     </div>
-
-    <button type="submit">Login</button>
-    <a href="/signup">Sign up instead</a>
-    
-  </form>
 </div>
 
 <script src="/js/login.js"></script>
