@@ -1,5 +1,5 @@
 {
-  "name": "eu4-achievement-picker",
+  "name": "steam-achievement-picker",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -18,6 +18,7 @@
     "express-session": "^1.17.3",
     "handlebars": "^4.7.7",
     "mysql2": "^3.0.1",
+    "node-fetch": "^2.6.8",
     "sequelize": "^6.28.0"
   }
 }

@@ -2,8 +2,6 @@ const { Model, DataTypes } = require("sequelize");
 const bcrypt = require("bcrypt");
 const sequelize = require("../config/connection");
 
-// changed every model to singular instead of plural - we had a lot of bugs (mixing "user" and "users", for example).  Keeping it all to no "s" at the end.
-
 class user extends Model {
   checkPassword(loginPw) {
     return bcrypt.compareSync(loginPw, this.password);
@@ -34,7 +32,8 @@ user.init(
       },
     },
     steam_id: {
-      type: DataTypes.INTEGER,
+      // JS doesn't like numbers larger than 16.  Attempting to bypass treating as a string.
+      type: DataTypes.STRING,
       allowNull: false,
       // steam ID are always 17 characters
       validate: {
@@ -49,7 +48,10 @@ user.init(
         return newuserData;
       },
       async beforeUpdate(updateduserData) {
-        updateduserData.password = await bcrypt.hash(updateduserData.password, 10);
+        updateduserData.password = await bcrypt.hash(
+          updateduserData.password,
+          10
+        );
         return updateduserData;
       },
     },
