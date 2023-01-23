@@ -18,11 +18,15 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/dashboard', withAuth, (req,res) => {
-    res.render('dashboard');
+    res.render('dashboard', {
+        loggedIn: req.session.loggedIn
+    });
 })
 
 router.get('/achievements', withAuth, (req,res) => {
-    res.render('my-achievements');
+    res.render('my-achievements', {
+        loggedIn: req.session.loggedIn
+    });
 })
 
 router.get('/signup', (req, res) => {
