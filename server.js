@@ -6,6 +6,7 @@ const SequelizeStore = require("connect-session-sequelize")(session.Store);
 const routes = require("./controllers");
 const sequelize = require("./config/connection");
 const helpers = require("./utils/helpers");
+require('dotenv').config();
 
 const app = express();
 // sets PORT for Heroku, or 3001 if developing on localhost
@@ -14,7 +15,7 @@ const PORT = process.env.PORT || 3001;
 const hbs = exphbs.create({ helpers });
 
 const sess = {
-  secret: '2nAHfLQI15WibE3S',
+  secret: process.env.SECRET,
   cookie: {},
   resave: false,
   saveUninitialized: true,
@@ -33,7 +34,7 @@ app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
-// use public folder to render front end code
+// use public folder to render front end code and images
 app.use(express.static(path.join(__dirname, "public")));
 
 // tells express to use imported routers
