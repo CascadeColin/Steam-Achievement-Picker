@@ -93,19 +93,39 @@ router.post("/signup", async (req, res) => {
     }
 
     // store appid in each achievement obj for each game
-    for (const obj of achievementsArr) {
+    for (const game of achievementsArr) {
+      // if game has no achievements, create a single "achievement" that can be called in the front end to indicate that the game doesn't have achievements
+      if (!game.playerstats.success) {
+        // get ownedGame sequelize object that matches appid of game
+        const game_id_obj = await ownedGame.findOne({
+          where: {
+            appid: game.playerstats.appid
+          }
+        });
+        // store game_id of sequelize object- this is achievement table foreign key
+        const game_id = game_id_obj.dataValues.id;
+        // create achievement sequelize object for every game that doesn't have achievements
+        await achievement.create({
+          ...game,
+          name: "Requested game has no achievements!",
+          achieved: 0,
+          unlock_time: 0,
+          game_id: game_id
+        });
+      }
       // for games that do have achievements.  games that don't will be handled in front end code (if db data = null, return "no achievements found")
-      if (obj.playerstats.success) {
+      else if (game.playerstats.success) {
         // store appid so it can be copied into each achievement object
-        const copyAppid = obj.playerstats.appid;
+        const copyAppid = game.playerstats.appid;
         // map appid as a property of each achievement object
-        obj.playerstats.achievements.map((obj) => (obj.appid = copyAppid));
+        game.playerstats.achievements.map(obj => obj.appid = copyAppid);
       }
     }
-    console.dir(achievementsArr)
+    // console.dir(achievementsArr)
 
     // for each achievement for each game, create a new entry in achievement table of db
     
+    // create a single "achievement" that can be called in the front end to indicate that the game doesn't have achievements
 
     // set logged in state to true and save to session cookie
     req.session.save(() => {
