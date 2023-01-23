@@ -19,4 +19,16 @@ router.get('/signup', (req, res) => {
     res.render('signup');
 });
 
+router.get('/dashboard', (req, res) => {
+    res.render('dashboard');
+});
+
+router.get('/achievementpicker', (req, res) => {
+    res.render('achievement-picker');
+});
+
+router.get('/achievements', (req, res) => {
+    res.render('my-achievements');
+});
+
 module.exports = router; 
