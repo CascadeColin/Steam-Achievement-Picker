@@ -28,4 +28,4 @@ function getRandomAchievement() {
     });
 }
 
-generatorBtnEl.addEventListener("click", getRandomAchievement);
+generatorBtnEl.addEventListener("submit", getRandomAchievement);
