@@ -5,8 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": " node server.js",
-    "build-css": "tailwindcss build src/styles.css -o public/css/styles.css"
+    "start": " node server.js"
   },
   "author": "",
   "license": "MIT",
@@ -21,8 +20,5 @@
     "mysql2": "^3.0.1",
     "node-fetch": "^2.6.8",
     "sequelize": "^6.28.0"
-  },
-  "devDependencies": {
-    "tailwindcss": "^3.2.4"
   }
 }
