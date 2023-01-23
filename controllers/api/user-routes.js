@@ -113,19 +113,31 @@ router.post("/signup", async (req, res) => {
           game_id: game_id
         });
       }
+
       // for games that do have achievements.  games that don't will be handled in front end code (if db data = null, return "no achievements found")
       else if (game.playerstats.success) {
         // store appid so it can be copied into each achievement object
         const copyAppid = game.playerstats.appid;
         // map appid as a property of each achievement object
         game.playerstats.achievements.map(obj => obj.appid = copyAppid);
+        // for each achievement on the achievements array for each game
+        for (const achieve_obj of game.playerstats.achievements) {
+          const game_id_obj = await ownedGame.findOne({
+            where: {
+              appid: game.playerstats.appid
+            }
+          });
+          const game_id = game_id_obj.dataValues.id;
+          await achievement.create({
+            ...game,
+            name: achieve_obj.apiname,
+            achieved: achieve_obj.achieved,
+            unlock_time: achieve_obj.unlocktime,
+            game_id: game_id
+          });
+        }
       }
     }
-    // console.dir(achievementsArr)
-
-    // for each achievement for each game, create a new entry in achievement table of db
-    
-    // create a single "achievement" that can be called in the front end to indicate that the game doesn't have achievements
 
     // set logged in state to true and save to session cookie
     req.session.save(() => {
