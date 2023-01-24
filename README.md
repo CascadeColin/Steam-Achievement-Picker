@@ -2,16 +2,18 @@
 ![Github license](https://img.shields.io/badge/License-MIT-yellow.svg)
 
 ## Table of Contents
-- [Description](#description)
-- [User Story](#userstory)
-- [Acceptance Criteria](#acceptancecriteria)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Credits](#credits)
-- [License](#license)
-- [Contribution](#contribution)
-- [Tests](#tests)
-- [Questions](#questions)
+- [Project 2: :video\_game: Steam-Achievement-Picker :video\_game:](#project-2-video_game-steam-achievement-picker-video_game)
+  - [Table of Contents](#table-of-contents)
+  - [Description](#description)
+  - [User Story](#user-story)
+  - [Acceptance Criteria](#acceptance-criteria)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [Credits](#credits)
+  - [License](#license)
+  - [Contribution](#contribution)
+  - [Tests](#tests)
+  - [Questions](#questions)
 
 ## Description
 This web application acts as an unofficial extension for the Steam client. Steam is a platform that connects game developers to gamers by offering a digital marketplace for video games. It also has has achievements for each game.
@@ -65,7 +67,8 @@ TO DO
 **Step 5:** To save your feedback, click on the Add Feedback button<br>
 **Step 5:** To logout, click on the logout link in the nav bar<br>
 
-[Here is the link to the dinner & drinks application.](https:)
+[Here is the link to the Vapour application.](https://vapour-for-gamers.herokuapp.com/)
+[Link to the repository](https://github.com/CascadeColin/Steam-Achievement-Picker)
 
 Below is an image of the landing page of the application.
 ![Steam Achievement Picker landing page screenshot]()
