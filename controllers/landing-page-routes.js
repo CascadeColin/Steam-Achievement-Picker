@@ -39,7 +39,11 @@ router.get("/signup", (req, res) => {
   res.render("signup");
 });
 
-router.get("/single-achievement", (req,res) => res.render("single-achievement"));
+router.get("/single-achievement", (req,res) => {
+  res.render("single-achievement", {
+    loggedIn: req.session.loggedIn,
+  });
+});
 
 // if any other route typed in URL, render homepage
 
