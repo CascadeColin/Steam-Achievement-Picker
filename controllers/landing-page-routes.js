@@ -68,9 +68,18 @@ router.get("/achievements", withAuth, async (req, res) => {
       user_id: User.dataValues.id
     }
   })
-
   const game_ids = games.map(game => {
-    return {game_id: game.dataValues.id}
+    return {
+      // name: game.dataValues.name,
+      game_id: game.dataValues.id
+    }
+  })
+
+  const getGameNames = games.map(game => {
+    return {
+      name: game.dataValues.name,
+      game_id: game.dataValues.id
+    }
   })
 
   const achs = await achievement.findAll({
@@ -79,10 +88,27 @@ router.get("/achievements", withAuth, async (req, res) => {
       [Op.or]: game_ids
     }
   })
-  const renderAchievements = achs.map(a => {
+  
+  const renderAchievementsUnsliced = achs.map(a => {
     return a = a.dataValues;
   })
-  
+
+  // shuffle the array, then slice to get the first 5
+  shuffle(renderAchievementsUnsliced);
+  const renderAchievement = renderAchievementsUnsliced.slice(0,5);
+
+  // console.log(getGameNames)
+  // console.log(renderAchievement)
+
+  const renderAchievements = renderAchievement.map(a => {
+    for (const obj of getGameNames) {
+      if (a.game_id === obj.game_id) {
+        a.gamename = obj.name;
+      }
+    }
+    return a;
+  });
+console.log(renderAchievements)
   res.render("all-achievements", {
     renderAchievements,
     loggedIn: req.session.loggedIn,
