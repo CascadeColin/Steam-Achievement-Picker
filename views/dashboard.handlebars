@@ -1,29 +1,59 @@
-<section class="random-generator-container">
-  <div>
-    <h3>
-      Not sure what to play next?
-    </h3>
-    <div>
-      <button type="submit" class="generator-btn">Help me pick a game</button>
-    </div>
-  </div>
-</section>
+<!-- main container  -->
+<div class="container mx-auto bg-white shadow-lg rounded-lg px-5 mt-40">
 
-<section class="owned-games-container">
-  <div class="card1">
-    <div><h4>Game Name Goes Here</h4></div>
-    <div><img src="" alt="Game Image" /></div>
-  </div>
-  <div class="card2">
-    <div><h4>Game Name Goes Here</h4></div>
-    <div><img src="" alt="Game Image" /></div>
-  </div>
-  <div class="card3">
-    <div><h4>Game Name Goes Here</h4></div>
-    <div><img src="" alt="Game Image" /></div>
-  </div>
-  <div class="card4">
-    <div><h4>Game Name Goes Here</h4></div>
-    <div><img src="" alt="Game Image" /></div>
-  </div>
-</section>
+    <!-- container for random picker  -->
+    <section class="random-generator-container border-b-2 pt-3 pb-3">
+        <div>
+            <h3 class="flex justify-center text-xl font-semibold mt-10 pb-2 pt-4">
+                Not sure what to play next?
+            </h3>
+            <div class="flex justify-center pb-3">
+                <button type="submit" class="generator-btn bg-indigo-500 hover:bg-violet-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Help me pick a game</button>
+            </div>
+        </div>
+    </section>
+    
+    <h2 class="flex justify-center text-xl font-semibold mt-10">Select from one of your games:</h2>
+    <!-- container for owned game picker  -->
+    <section class="owned-games-container grid grid-cols-4 gap-4 m-3 mb-12 p-6">
+
+        <div class="card1 border rounded bg-white shadow-lg p-3">
+            <div>
+
+                <h4>Game Name Goes Here</h4>
+                <h4 class="game1"></h4>
+                <img src="/images/The Witcher- Enhanced Edition (1).png" alt="Game Image" class="dashboard-game-image" />
+            </div>
+        </div>
+
+        <div class="card2 border rounded bg-white shadow-lg p-3">
+            <div>
+
+                <h4>Game Name Goes Here</h4>
+
+                <h4 class="game2"></h4>
+                <img src="/images/Fallout- New Image.jpeg" alt="Game Image" class="dashboard-game-image"/>
+            </div>
+        </div>
+
+        <div class="card3 border rounded bg-white shadow-lg p-3">
+            <div>
+
+                <h4>Game Name Goes Here</h4>
+                <h4 class="game3"></h4>
+                <img src="/images/Europe Universalis IV.jpeg" alt="Game Image" class="dashboard-game-image"/>
+            </div>
+        </div>
+
+        <div class="card4 border rounded bg-white shadow-lg p-3">
+            <div>
+
+                <h4>Game Name Goes Here</h4>
+                <h4 class="game4"></h4>
+                <img src="/images/sid meier's civilization v.jpeg" alt="Game Image" class="dashboard-game-image"/>
+            </div>
+        </div>
+    </section>
+
+</div>
+    <script src="/js/dashboard.js"></script>

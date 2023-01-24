@@ -1,9 +1,9 @@
 const router = require("express").Router();
-const { user, ownedGame, achievement, } = require("../../models");
+const { user, ownedGame, achievement } = require("../../models");
 const sequelize = require("../../config/connection");
 const fetch = require("node-fetch");
 require("dotenv").config();
-
+const { Op } = require('sequelize');
 // CREATE new user
 router.post("/signup", async (req, res) => {
   try {
@@ -15,7 +15,7 @@ router.post("/signup", async (req, res) => {
 
     /* take user data and fetch ownedgames and achievements, then store in db */
 
-/* start ownedGame autoseeding */
+    /* start ownedGame autoseeding */
 
     // fetch owned games by provided steamid
     const dbGameData = await fetch(
@@ -47,50 +47,103 @@ router.post("/signup", async (req, res) => {
     // get user_id of the user we just created
     const userId = await user.findOne({
       where: {
-        email: req.body.email
-      }
+        email: req.body.email,
+      },
     });
-    const {id} = userId;
+    const { id } = userId;
 
     // then seed that game data into db using seedData
     // link to user by "find user where email=req.body.email" to get newly created user
     for (const game of seedData) {
       await ownedGame.create({
         ...game,
-        user_id: id
+        user_id: id,
       });
     }
-/* end of ownedGame autoseeding */
-/* start achievements autoseeding */
-// FIXME:  currently does not work, but it shouldn't break the server.  will work on this when i get home later tonight - Colin
+    /* end of ownedGame autoseeding */
+    /* start achievements autoseeding */
+    // FIXME:  currently does not work, but it shouldn't break the server.  will work on this when i get home later tonight - Colin
 
     //get appid for each ownedGame by newly created user id
     const arrayOfClasses = await ownedGame.findAll({
       where: {
-        user_id: id
-      }
+        user_id: id,
+      },
     });
 
     // map over the array of sequelize objects to get appid for each game
     // TODO: appidArr is an array that contains the appids as primitive values
-    const appidArr = arrayOfClasses.map(games => games.dataValues.appid);
+    const appidArr = arrayOfClasses.map((games) => games.dataValues.appid);
 
-    // for each appid, fetch GetPlayerAchievements 
-    const newarr = appidArr.forEach(async (appid) => {
-      const dbAchievementData = await fetch(`http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid=236850&key=${process.env.API_KEY}&steamid=${req.body.steamid}`)
-      .then(res => res.json())
-      .then(data => data)
-      return dbAchievementData;
-    });
+    // for each appid, fetch GetPlayerAchievements && create db entries in achievements table
 
-    console.dir(newarr);
-    
-    // create db entries in achievements table
+    // declared in this scope for manipulation in multiple loops
+    const achievementsArr = [];
 
-    // set logged in state to true and save to session cookie
+    for (const appid of appidArr) {
+      await fetch(
+        `http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid=${appid}&key=${process.env.API_KEY}&steamid=${req.body.steamid}`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          data.playerstats.appid = appid;
+          // data.playerstats.achievements.map(obj => obj.appid = appid);
+          achievementsArr.push(data);
+        });
+    }
+
+    // store appid in each achievement obj for each game
+    for (const game of achievementsArr) {
+      // if game has no achievements, create a single "achievement" that can be called in the front end to indicate that the game doesn't have achievements
+      if (!game.playerstats.success) {
+        // get ownedGame sequelize object that matches appid of game
+        const game_id_obj = await ownedGame.findOne({
+          where: {
+            appid: game.playerstats.appid
+          }
+        });
+        // store game_id of sequelize object- this is achievement table foreign key
+        const game_id = game_id_obj.dataValues.id;
+        // create achievement sequelize object for every game that doesn't have achievements
+        await achievement.create({
+          ...game,
+          name: "Requested game has no achievements!",
+          achieved: 0,
+          unlock_time: 0,
+          game_id: game_id
+        });
+      }
+
+      // for games that do have achievements.  games that don't will be handled in front end code (if db data = null, return "no achievements found")
+      else if (game.playerstats.success) {
+        // store appid so it can be copied into each achievement object
+        const copyAppid = game.playerstats.appid;
+        // map appid as a property of each achievement object
+        game.playerstats.achievements.map(obj => obj.appid = copyAppid);
+        // for each achievement on the achievements array for each game
+        for (const achieve_obj of game.playerstats.achievements) {
+          const game_id_obj = await ownedGame.findOne({
+            where: {
+              appid: game.playerstats.appid
+            }
+          });
+          const game_id = game_id_obj.dataValues.id;
+          await achievement.create({
+            ...game,
+            name: achieve_obj.apiname,
+            achieved: achieve_obj.achieved,
+            unlock_time: achieve_obj.unlocktime,
+            game_id: game_id
+          });
+        }
+      }
+    }
+
     req.session.save(() => {
+      // loggdIn tells views what to display
       req.session.loggedIn = true;
-
+      // steamid is called in api routes to sort returned data by the currently logged in user
+      req.session.steamid = dbUserData.dataValues.steam_id;
       res.status(200).json(dbUserData);
     });
   } catch (err) {
@@ -107,6 +160,29 @@ router.post("/login", async (req, res) => {
         email: req.body.email,
       },
     });
+
+    const dbGameData = await ownedGame.findAll({
+      where: {
+        user_id: dbUserData.dataValues.id
+      }
+    });
+    console.log(dbGameData)
+
+    const appidArr = dbGameData.map((games) => games.dataValues.id);
+    const appidFormatted = appidArr.map(id => {
+      return {game_id: id}
+    });
+
+    const achievements = await achievement.findAll({
+      where: {
+        [Op.or]: appidFormatted,
+      },
+    });
+
+    // console.dir(achievements)
+    const formattedAchievements = achievements.map(data => {
+      return data = data.dataValues
+    })
 
     if (!dbUserData) {
       res
@@ -125,8 +201,11 @@ router.post("/login", async (req, res) => {
     }
 
     req.session.save(() => {
+      // loggdIn tells views what to display
+      
       req.session.loggedIn = true;
-
+      // steamid is called in api routes to sort returned data by the currently logged in user
+      req.session.steamid = dbUserData.dataValues.steam_id;
       res
         .status(200)
         .json({ user: dbUserData, message: "You are now logged in!" });
@@ -138,8 +217,10 @@ router.post("/login", async (req, res) => {
 });
 
 // Logout
-router.post("/logout", (req, res) => {
+router.post("/logout", async (req, res) => {
   if (req.session.loggedIn) {
+    /* use req.session = null to destroy it?  https://expressjs.com/en/resources/middleware/cookie-session.html */
+    // const sessionTable = await session
     req.session.destroy(() => {
       res.status(204).end();
     });
