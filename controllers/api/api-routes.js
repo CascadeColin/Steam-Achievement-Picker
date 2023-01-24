@@ -48,7 +48,6 @@ router.get("/ownedgames", async (req, res) => {
         steam_id: steam_id,
       },
     });
-    console.log(currentUser.dataValues.id);
     const games = await ownedGame.findAll({
       where: {
         user_id: currentUser.dataValues.id,
@@ -69,7 +68,25 @@ router.get("/feedback", async (req, res) => {
 });
 
 // TODO: post feedback to db
-// router.post("/feedback", async (req,res) => {})
+router.post("/feedback", async (req,res) => {
+  try {
+    const steam_id = req.session.steamid;
+    const currentUser = await user.findOne({
+      where: {
+        steam_id: steam_id,
+      },
+    });
+    const newComment = await feedback.create({
+      //FIXME: link to corrent data once it's built in FE
+      comment_body: req.body,
+      // FIXME: find a way to link this
+      achievement_id: 1,
+      user_id: currentUser.dataValues.id
+    })
+  } catch (err) {
+    res.status(500).json(err);
+  }
+})
 
 router.get("/single-achievement", async (req, res) => {
   try {
