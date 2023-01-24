@@ -5,8 +5,6 @@ const seedGames = require('./gameData.json');
 const seedAchievements = require('./achievementData.json');
 const seedFeedback = require('./feedbackData.json');
 
-//TODO: add functionality to automatically POST data on achievements and ownedGames based on steamid upon account creation
-
 const seedAll = async () => {
     // connect to db
     await sequelize.sync({ force: true });
@@ -18,7 +16,7 @@ const seedAll = async () => {
     });
 
     for (const game of seedGames) {
-        const newGames = await ownedGame.create({
+        await ownedGame.create({
             ...game,
             // randomly assign a user_id
             user_id: newUsers[Math.floor(Math.random()*newUsers.length)].id
@@ -26,15 +24,14 @@ const seedAll = async () => {
     }
 
     for (const achievements of seedAchievements) {
-        const newAchievements = await achievement.create({
+        await achievement.create({
             ...achievements,
-            //hardcoded random value of 1,2,3,or4 because newGames not available in this scope
             game_id: Math.ceil(Math.random()*4)
         });
     }
 
     for (const feedbacks of seedFeedback) {
-        const newFeedback = await feedback.create({
+        await feedback.create({
             ...feedbacks,
             achievement_id: Math.ceil(Math.random()*3),
             user_id: newUsers[Math.floor(Math.random()*newUsers.length)].id

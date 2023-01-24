@@ -93,24 +93,57 @@ router.post("/signup", async (req, res) => {
     }
 
     // store appid in each achievement obj for each game
-    for (const obj of achievementsArr) {
+    for (const game of achievementsArr) {
+      // if game has no achievements, create a single "achievement" that can be called in the front end to indicate that the game doesn't have achievements
+      if (!game.playerstats.success) {
+        // get ownedGame sequelize object that matches appid of game
+        const game_id_obj = await ownedGame.findOne({
+          where: {
+            appid: game.playerstats.appid
+          }
+        });
+        // store game_id of sequelize object- this is achievement table foreign key
+        const game_id = game_id_obj.dataValues.id;
+        // create achievement sequelize object for every game that doesn't have achievements
+        await achievement.create({
+          ...game,
+          name: "Requested game has no achievements!",
+          achieved: 0,
+          unlock_time: 0,
+          game_id: game_id
+        });
+      }
+
       // for games that do have achievements.  games that don't will be handled in front end code (if db data = null, return "no achievements found")
-      if (obj.playerstats.success) {
+      else if (game.playerstats.success) {
         // store appid so it can be copied into each achievement object
-        const copyAppid = obj.playerstats.appid;
+        const copyAppid = game.playerstats.appid;
         // map appid as a property of each achievement object
-        obj.playerstats.achievements.map((obj) => (obj.appid = copyAppid));
+        game.playerstats.achievements.map(obj => obj.appid = copyAppid);
+        // for each achievement on the achievements array for each game
+        for (const achieve_obj of game.playerstats.achievements) {
+          const game_id_obj = await ownedGame.findOne({
+            where: {
+              appid: game.playerstats.appid
+            }
+          });
+          const game_id = game_id_obj.dataValues.id;
+          await achievement.create({
+            ...game,
+            name: achieve_obj.apiname,
+            achieved: achieve_obj.achieved,
+            unlock_time: achieve_obj.unlocktime,
+            game_id: game_id
+          });
+        }
       }
     }
-    console.dir(achievementsArr)
 
-    // for each achievement for each game, create a new entry in achievement table of db
-    
-
-    // set logged in state to true and save to session cookie
     req.session.save(() => {
+      // loggdIn tells views what to display
       req.session.loggedIn = true;
-
+      // steamid is called in api routes to sort returned data by the currently logged in user
+      req.session.steamid = dbUserData.dataValues.steam_id;
       res.status(200).json(dbUserData);
     });
   } catch (err) {
@@ -128,6 +161,8 @@ router.post("/login", async (req, res) => {
       },
     });
 
+    const steam_id = dbUserData.dataValues.steam_id; 
+    
     if (!dbUserData) {
       res
         .status(400)
@@ -145,8 +180,10 @@ router.post("/login", async (req, res) => {
     }
 
     req.session.save(() => {
+      // loggdIn tells views what to display
       req.session.loggedIn = true;
-
+      // steamid is called in api routes to sort returned data by the currently logged in user
+      req.session.steamid = dbUserData.dataValues.steam_id;
       res
         .status(200)
         .json({ user: dbUserData, message: "You are now logged in!" });
@@ -158,8 +195,10 @@ router.post("/login", async (req, res) => {
 });
 
 // Logout
-router.post("/logout", (req, res) => {
+router.post("/logout", async (req, res) => {
   if (req.session.loggedIn) {
+    /* use req.session = null to destroy it?  https://expressjs.com/en/resources/middleware/cookie-session.html */
+    // const sessionTable = await session
     req.session.destroy(() => {
       res.status(204).end();
     });

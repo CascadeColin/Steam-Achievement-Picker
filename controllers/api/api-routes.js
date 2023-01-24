@@ -1,64 +1,94 @@
 const router = require("express").Router();
-const { user } = require("../../models");
+const { user, achievement, feedback, ownedGame } = require("../../models");
 const sequelize = require("../../config/connection");
 const fetch = require("node-fetch");
 require("dotenv").config();
-// checks fetch request status, sends alert if Steam API is not behaving as expected, otherwise returns its input (works similar to middleware)
-// FIXME: currently broken
-// const { checkStatus } = require("../../utils/helpers");
+const { Op } = require("sequelize");
 
-//TODO: dynamically apply appid and steamid to fetch URL. Use these consts for testing only.
-const appid = "236850";
-const steamid = "76561198142429533";
-
-//TODO:After login/signup the steamid for the user should be gotten from the input
-//FIXME: this broke the server.  it also needs to be in the front-end code
-// buttonName.on("click", function(){
-//   var steamid = $("theClassOrId");
-//   steamid = steamid .val().trim();
-//   //TODO:call the fuction after login or signup button has been clicked
-// })
-
-// TODO: will add middleware to check for logged in state once I get the calls working
-
-// get player achievements
 router.get("/achievements", async (req, res) => {
-  fetch(
-    `http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid=${appid}&key=${process.env.API_KEY}&steamid=${steamid}`
-  )
-    // .then(checkStatus)
-    .then((res) => res.json())
-    .then((data) => res.status(200).json(data));
+  try {
+    // gets steamid for the currently logged in session
+    const steam_id = req.session.steamid;
+    // find user in db by that steamid
+    const currentUser = await user.findOne({
+      where: {
+        steam_id: steam_id,
+      },
+    });
+    // find all games by that steam_id
+    const games = await ownedGame.findAll({
+      where: {
+        user_id: currentUser.dataValues.id,
+      },
+    });
+    // map owned games to isolate each game_id, then format it so sequelize can use it
+    const game_id_raw = games.map((game) => game.dataValues.id);
+    const game_id_objs = game_id_raw.map((id) => {
+      return { game_id: id };
+    });
+
+    // find all achievements where game_id matches a value in owned games for current user
+    const achievements = await achievement.findAll({
+      where: {
+        [Op.or]: game_id_objs,
+      },
+    });
+
+    res.status(200).json(achievements);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
-// get owned games
 router.get("/ownedgames", async (req, res) => {
-  fetch(
-    `http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${process.env.API_KEY}&steamid=${steamid}&format=json&include_appinfo=true&`
-  )
-    // .then(checkStatus)
-    .then((res) => res.json())
-    .then((data) => res.status(200).json(data));
+  try {
+    const steam_id = req.session.steamid;
+    const currentUser = await user.findOne({
+      where: {
+        steam_id: steam_id,
+      },
+    });
+    console.log(currentUser.dataValues.id);
+    const games = await ownedGame.findAll({
+      where: {
+        user_id: currentUser.dataValues.id,
+      },
+    });
+    res.status(200).json(games);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
+
+router.get("/feedback", async (req, res) => {
+  try {
+    res.status(200).json(await feedback.findAll());
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// TODO: post feedback to db
+// router.post("/feedback", async (req,res) => {})
+
+router.get("/single-achievement", async (req, res) => {
+  try {
+    const data = await achievement.findOne({
+      where: {
+        // something in req.body, waiting for FE code to parse it
+      },
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+/* These are still in development and are not part of initial launch */
 
 // get news for specific appid
-router.get("/gamenews", async (req, res) => {
-  fetch(
-    `http://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid=${appid}&count=3&maxlength=300&format=json`
-  )
-    // .then(checkStatus)
-    .then((res) => res.json())
-    .then((data) => res.status(200).json(data));
-});
+// router.get("/gamenews", async (req, res) => {});
 
 // get friends list
-router.get("/friends", async (req, res) => {
-  fetch(
-    `http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=${process.env.API_KEY}&steamid=${steamid}&relationship=friend`
-  )
-    // .then(checkStatus)
-    .then((res) => res.json())
-    .then((data) => res.status(200).json(data));
-});
+// router.get("/friends", async (req, res) => {});
 
 module.exports = router;

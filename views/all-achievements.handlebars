@@ -1,29 +1,58 @@
-<!-- NICE TO HAVE: an option to see all achievements -->
-<div>
-<button type="submit" class="btn">List All Achievements</button>
-</div>
-<!-- NICE TO HAVE: a way to filter list of achievements by game > could populate list of owned games into a dropdown -->
-<div>
-  <select id="owned-games-dropdown" class="text-dropdowns">
-    <option value="" disabled selected>Filter By Game</option>
-  </select>
-</div>
-
-<!-- use a partial here for list of achievements by game? -->
-{{> achievements-by-game}}
-
-
-{{#each achievements as |achievement|}}
-  <div class="my-achievements-container">
-      <h3>{{achievement.name}}</h3>
-    </div>
-    <div>
-        <!-- do we want to add an Add Note button or just make the achievement name a button? -->
-      <button type="submit" class="btn">Add Note</button>
-    </div>
+<div
+  class="my-achievements-container flex flex-col justify-center items-center mt-5"
+>
+  <div class="title-div my-5">
+    <h2 class="font-bold text-xl">My Achievements</h2>
   </div>
-{{/each}}
+  <div class="game-images-container flex flex-row my-10">
+    <img
+      src="/images/The Witcher- Enhanced Edition (1).png"
+      alt="the witcher game logo"
+      class="mx-5 achievement-name-container"
+    />
+    <img
+      src="/images/Fallout- New Image.jpeg"
+      alt="the witcher game logo"
+      class="mx-5"
+    />
+    <img
+      src="/images/Europe Universalis IV.jpeg"
+      alt="the witcher game logo"
+      class="mx-5"
+    />
+    <img
+      src="/images/sid meier's civilization v.jpeg"
+      alt="the witcher game logo"
+      class="mx-5"
+    />
+    <img
+      src="/images/Stranded Deep.jpeg"
+      alt="the witcher game logo"
+      class="mx-5"
+    />
+    <img
+      src="/images/Cities- Skylines.jpeg"
+      alt="the witcher game logo"
+      class="mx-5"
+    />
+    <img
+      src="/images/Battle Brothers.jpeg"
+      alt="the witcher game logo"
+      class="mx-5"
+    />
+    <img
+      src="/images/Hollow Knight.jpeg"
+      alt="the witcher game logo"
+      class="mx-5"
+    />
+  </div>
+  {{#each achievements as |achievement|}}
+    <div
+      class="achievement-name-container flex border rounded bg-white shadow-lg p-3 my-2 mx-5"
+    >
+      <h4>{{achievement.name}}</h4>
+    </div>
+  {{/each}}
+</div>
 
-{{#if loggedIn}}
-<script src="/js/gamesdropdown.js"></script>
-{{/if}}
+<script src="/js/add-feedback.js"></script>

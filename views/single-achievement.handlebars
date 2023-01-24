@@ -1,23 +1,35 @@
 <!-- this container will display the achievement name, as well as the achievement description & when it was unlocked -->
-<div class="single-achievement-container">
-  <div>
-    <h3>{{achievement.name}}</h3>
+<div class="my-20 h-screen place-content-center">
+  <div
+    class="single-achievement-container flex flex-col justify-center items-center my-12"
+  >
+    <div class="flex border rounded bg-white shadow-lg p-3">
+      <i class="fa-sharp fa-solid fa-shield-halved"></i>
+      <h3>{{achievement.name}}</h3>
+      <i class="fa-sharp fa-solid fa-shield-halved"></i>
+    </div>
   </div>
-  <div>
-    <p>{{achievement.description}}</p>
-    <p>{{achievement.unlocked}}</p>
-  </div>
+
+  <!-- this container is for the note text box -->
+  <form class="note-form-container flex flex-col justify-center items-center">
+    <div class="w-1/2" id="feeback_text">
+      <textarea
+        name="note-body"
+        class="flex border rounded bg-white shadow-lg p-3 w-full"
+      ></textarea>
+    </div>
+
+    <div>
+      <button
+        type="submit"
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline my-2"
+      >
+        Add Note
+      </button>
+    </div>
+  </form>
 </div>
 
-<!-- this container is for the note text box -->
-<form class="note-form-container">
-  <div>
-    <textarea name="note-body"></textarea>
-  </div>
-
-  <div>
-    <button type="submit">Add Note</button>
-  </div>
-</form>
+<script src="/js/submit-feedback.js"></script>
 
 <!-- what happens after note has been added, how do we display it? do we use a partial? -->
