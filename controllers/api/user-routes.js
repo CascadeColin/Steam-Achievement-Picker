@@ -139,9 +139,10 @@ router.post("/signup", async (req, res) => {
       }
     }
 
-    // set logged in state to true and save to session cookie
     req.session.save(() => {
+      // loggdIn tells views what to display
       req.session.loggedIn = true;
+      // steamid is called in api routes to sort returned data by the currently logged in user
       req.session.steamid = dbUserData.dataValues.steam_id;
       res.status(200).json(dbUserData);
     });
@@ -179,7 +180,9 @@ router.post("/login", async (req, res) => {
     }
 
     req.session.save(() => {
+      // loggdIn tells views what to display
       req.session.loggedIn = true;
+      // steamid is called in api routes to sort returned data by the currently logged in user
       req.session.steamid = dbUserData.dataValues.steam_id;
       res
         .status(200)
@@ -192,8 +195,10 @@ router.post("/login", async (req, res) => {
 });
 
 // Logout
-router.post("/logout", (req, res) => {
+router.post("/logout", async (req, res) => {
   if (req.session.loggedIn) {
+    /* use req.session = null to destroy it?  https://expressjs.com/en/resources/middleware/cookie-session.html */
+    // const sessionTable = await session
     req.session.destroy(() => {
       res.status(204).end();
     });
