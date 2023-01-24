@@ -142,7 +142,7 @@ router.post("/signup", async (req, res) => {
     // set logged in state to true and save to session cookie
     req.session.save(() => {
       req.session.loggedIn = true;
-
+      req.session.steamid = dbUserData.dataValues.steam_id;
       res.status(200).json(dbUserData);
     });
   } catch (err) {
@@ -160,6 +160,8 @@ router.post("/login", async (req, res) => {
       },
     });
 
+    const steam_id = dbUserData.dataValues.steam_id; 
+    
     if (!dbUserData) {
       res
         .status(400)
@@ -178,7 +180,7 @@ router.post("/login", async (req, res) => {
 
     req.session.save(() => {
       req.session.loggedIn = true;
-
+      req.session.steamid = dbUserData.dataValues.steam_id;
       res
         .status(200)
         .json({ user: dbUserData, message: "You are now logged in!" });
