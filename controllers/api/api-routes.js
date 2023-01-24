@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { user } = require("../../models");
+const { user, achievement, feedback, ownedGame } = require("../../models");
 const sequelize = require("../../config/connection");
 const fetch = require("node-fetch");
 require("dotenv").config();
@@ -23,22 +23,46 @@ const steamid = "76561198142429533";
 
 // get player achievements
 router.get("/achievements", async (req, res) => {
-  fetch(
-    `http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid=${appid}&key=${process.env.API_KEY}&steamid=${steamid}`
-  )
-    // .then(checkStatus)
-    .then((res) => res.json())
-    .then((data) => res.status(200).json(data));
+  try {
+    // gets steamid for the currently logged in session
+    const steam_id = req.session.steamid.toString();
+    // find user in db by that steamid
+    const currentUser = await user.findOne({
+      where: {
+        steam_id: steam_id
+      }
+    });
+    console.log(currentUser.dataValues.id)
+    const achievements = await achievement.findAll({
+      where: {
+
+      }
+    });
+    res.json(achievements);
+  } catch(err) {
+    console.log(err)
+  }
 });
 
 // get owned games
 router.get("/ownedgames", async (req, res) => {
-  fetch(
-    `http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${process.env.API_KEY}&steamid=${steamid}&format=json&include_appinfo=true&`
-  )
-    // .then(checkStatus)
-    .then((res) => res.json())
-    .then((data) => res.status(200).json(data));
+  try {
+    const steam_id = req.session.steamid.toString();
+    const currentUser = await user.findOne({
+      where: {
+        steam_id: steam_id
+      }
+    });
+    console.log(currentUser.dataValues.id)
+    const games = await ownedGame.findAll({
+      where: {
+       user_id: currentUser.dataValues.id
+      }
+    });
+    res.json(games);
+  } catch(err) {
+    console.log(err)
+  }
 });
 
 // get news for specific appid
