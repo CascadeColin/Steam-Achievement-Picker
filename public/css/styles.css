@@ -12,8 +12,8 @@ img.game-image {
 }
 
 img.dashboard-game-image {
-    height: 100%;
-    width: 100%;
+    height: 50%;
+    width: 50%;
     animation-duration: 2.5s;
     animation-name: slidein;
 }
