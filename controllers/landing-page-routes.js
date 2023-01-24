@@ -29,6 +29,12 @@ router.get("/achievements", withAuth, (req, res) => {
   });
 });
 
+router.get("/achievement-picker", withAuth, (req, res) => {
+  res.render("achievement-picker", {
+    loggedIn: req.session.loggedIn,
+  });
+});
+
 router.get("/signup", (req, res) => {
   res.render("signup");
 });
