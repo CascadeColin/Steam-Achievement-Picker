@@ -1,21 +1,34 @@
-img {
-    height: 120px;
-    width: 120px;
+img.gif {
+    height: 80%;
+    width: 60%;
+    margin: auto;
+}
+    
+img.game-image {
+  height: 110px;
+  width: 120px;
+  animation-duration: 2.5s;
+  animation-name: slidein;
+}
+
+img.dashboard-game-image {
+    height: 100%;
+    width: 100%;
     animation-duration: 2.5s;
     animation-name: slidein;
+}
+
+.title-div {
+  animation-duration: 1s;
+  animation-name: slidein;
+}
+
+@keyframes slidein {
+  from {
+    margin-left: 100%;
   }
 
-  .title-div {
-    animation-duration: 1s;
-    animation-name: slidein;
+  to {
+    margin-left: 0%;
   }
-  
-  @keyframes slidein {
-    from {
-      margin-left: 100%;
-    }
-
-    to {
-      margin-left: 0%;
-    }
-  }
+}
