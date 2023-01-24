@@ -24,7 +24,13 @@ router.get("/dashboard", withAuth, (req, res) => {
 });
 
 router.get("/achievements", withAuth, (req, res) => {
-  res.render("my-achievements", {
+  res.render("all-achievements", {
+    loggedIn: req.session.loggedIn,
+  });
+});
+
+router.get("/achievement-picker", withAuth, (req, res) => {
+  res.render("achievement-picker", {
     loggedIn: req.session.loggedIn,
   });
 });
