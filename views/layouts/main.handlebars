@@ -5,20 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://kit.fontawesome.com/992b8b8f31.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="public/css/styles.css">
+    <link rel="stylesheet" href="/css/styles.css">
     <title>Steam Achievement Picker</title>
   </head>
 
   <body class="bg-gray-50">
     <div>
       <header>
-        <nav class="flex items-center justify-between flex-wrap bg-slate-500 p-6">
+        <nav class="sticky top-0 z-50 flex w-full items-center justify-between flex-wrap bg-sky-700 p-6">
           <h1 class="font-semibold text-slate-50 text-3xl tracking-tight">
             <a href="/">Vapour</a>
           </h1>
   
           <div class="justify-end">
             {{#if loggedIn}}
+            <a href="/dashboard" class="block mt-4 lg:inline-block lg:mt-0 text-slate-200 hover:text-white mr-4">My
+              Dashboard</a>
             <a href="/achievements" class="block mt-4 lg:inline-block lg:mt-0 text-slate-200 hover:text-white mr-4">My
               Achievements</a>
             <button id="logout"
