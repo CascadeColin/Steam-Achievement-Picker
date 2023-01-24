@@ -24,7 +24,7 @@ router.get("/dashboard", withAuth, (req, res) => {
 });
 
 router.get("/achievements", withAuth, (req, res) => {
-  res.render("my-achievements", {
+  res.render("all-achievements", {
     loggedIn: req.session.loggedIn,
   });
 });
@@ -35,7 +35,7 @@ router.get("/signup", (req, res) => {
 
 // if any other route typed in URL, render homepage
 router.get("*", (req, res) => {
-  if (req.session.loggedIn) {
+  if (req.session.loggedIn) {ff
     res.render("dashboard", {
       loggedIn: req.session.loggedIn,
     });
