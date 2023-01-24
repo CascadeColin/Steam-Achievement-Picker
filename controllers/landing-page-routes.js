@@ -40,10 +40,10 @@ router.get("/dashboard", withAuth, async (req, res) => {
     game2: randomGame[1].dataValues.name,
     game3: randomGame[2].dataValues.name,
     game4: randomGame[3].dataValues.name,
-    game1url: `http://media.steampowered.com/steamcommunity/public/images/apps/${randomGame[0].dataValues.appid}/${randomGame[0].dataValues.img_icon_url}.jpg`,
-    game2url: `http://media.steampowered.com/steamcommunity/public/images/apps/${randomGame[1].dataValues.appid}/${randomGame[1].dataValues.img_icon_url}.jpg`,
-    game3url: `http://media.steampowered.com/steamcommunity/public/images/apps/${randomGame[2].dataValues.appid}/${randomGame[2].dataValues.img_icon_url}.jpg`,
-    game4url: `http://media.steampowered.com/steamcommunity/public/images/apps/${randomGame[3].dataValues.appid}/${randomGame[3].dataValues.img_icon_url}.jpg`,
+    game1url: `https://media.steampowered.com/steamcommunity/public/images/apps/${randomGame[0].dataValues.appid}/${randomGame[0].dataValues.img_icon_url}.jpg`,
+    game2url: `https://media.steampowered.com/steamcommunity/public/images/apps/${randomGame[1].dataValues.appid}/${randomGame[1].dataValues.img_icon_url}.jpg`,
+    game3url: `https://media.steampowered.com/steamcommunity/public/images/apps/${randomGame[2].dataValues.appid}/${randomGame[2].dataValues.img_icon_url}.jpg`,
+    game4url: `https://media.steampowered.com/steamcommunity/public/images/apps/${randomGame[3].dataValues.appid}/${randomGame[3].dataValues.img_icon_url}.jpg`,
     game1appid: randomGame[0].dataValues.appid
   }
 
