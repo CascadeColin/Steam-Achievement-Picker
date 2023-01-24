@@ -1,29 +1,11 @@
-<div>
-    <div>
-        <h2>Your Next Adventure:</h2>
-    </div>
-
-    <article>
-        <div>
-            {{!-- Game Box Art Image will go here--}}
-            <img>
-        </div>
-
-        <div>
-            <div>
-                {{!-- Specific Achievement Name goes here  --}}
-                <h6>Achievement Name</h6>
-            </div>
-
-            <div>
-                {{!-- Achievement Image will go here  --}}
-                <img>
-            </div>
-
-            <div>
-                {{!-- Achievement Description/Requirements to unlock go here  --}}
-                <p></p>
-            </div>
-        </div>
-    </article>
+<div class="next-adventure-title flex justify-center items-center my-12 font-bold">
+<h2 class="time text-xl"></h2>
 </div>
+
+<div id="main" style="display: none;">
+<h3 class="text-center text-2xl font-bold">Achievement Name{{achievement.name}}</h3>
+<img src="/images/gaming-gif.gif" alt="gaming gif" class="gif">
+</div>
+
+<script src="/js/next-adventure-display.js"></script>
+
