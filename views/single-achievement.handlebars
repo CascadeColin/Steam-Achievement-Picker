@@ -12,7 +12,7 @@
 
   <!-- this container is for the note text box -->
   <form class="note-form-container flex flex-col justify-center items-center">
-    <div class="w-1/2">
+    <div class="w-1/2" id="feeback_text">
       <textarea
         name="note-body"
         class="flex border rounded bg-white shadow-lg p-3 w-full"
@@ -22,7 +22,7 @@
     <div>
       <button
         type="submit"
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline my-2"
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline my-2" id="submit_btn"
       >
         Add Note
       </button>
@@ -30,6 +30,6 @@
   </form>
 </div>
 
-<script src="/public/js/submit-feedback.js"></script>
+<script src="/js/submit-feedback.js"></script>
 
 <!-- what happens after note has been added, how do we display it? do we use a partial? -->

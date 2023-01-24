@@ -3,7 +3,7 @@ const { user, ownedGame, achievement } = require("../../models");
 const sequelize = require("../../config/connection");
 const fetch = require("node-fetch");
 require("dotenv").config();
-
+const { Op } = require('sequelize');
 // CREATE new user
 router.post("/signup", async (req, res) => {
   try {
@@ -139,14 +139,14 @@ router.post("/signup", async (req, res) => {
       }
     }
 
-    // set logged in state to true and save to session cookie
     req.session.save(() => {
+      // loggdIn tells views what to display
       req.session.loggedIn = true;
+      // steamid is called in api routes to sort returned data by the currently logged in user
       req.session.steamid = dbUserData.dataValues.steam_id;
       res.status(200).json(dbUserData);
     });
   } catch (err) {
-    console.log(err);
     res.status(500).json(err);
   }
 });
@@ -160,8 +160,27 @@ router.post("/login", async (req, res) => {
       },
     });
 
-    const steam_id = dbUserData.dataValues.steam_id; 
-    
+    const dbGameData = await ownedGame.findAll({
+      where: {
+        user_id: dbUserData.dataValues.id
+      }
+    });
+
+    const appidArr = dbGameData.map((games) => games.dataValues.id);
+    const appidFormatted = appidArr.map(id => {
+      return {game_id: id}
+    });
+
+    const achievements = await achievement.findAll({
+      where: {
+        [Op.or]: appidFormatted,
+      },
+    });
+
+    const formattedAchievements = achievements.map(data => {
+      return data = data.dataValues
+    })
+
     if (!dbUserData) {
       res
         .status(400)
@@ -179,21 +198,25 @@ router.post("/login", async (req, res) => {
     }
 
     req.session.save(() => {
+      // loggdIn tells views what to display
+      
       req.session.loggedIn = true;
+      // steamid is called in api routes to sort returned data by the currently logged in user
       req.session.steamid = dbUserData.dataValues.steam_id;
       res
         .status(200)
         .json({ user: dbUserData, message: "You are now logged in!" });
     });
   } catch (err) {
-    console.log(err);
     res.status(500).json(err);
   }
 });
 
 // Logout
-router.post("/logout", (req, res) => {
+router.post("/logout", async (req, res) => {
   if (req.session.loggedIn) {
+    /* use req.session = null to destroy it?  https://expressjs.com/en/resources/middleware/cookie-session.html */
+    // const sessionTable = await session
     req.session.destroy(() => {
       res.status(204).end();
     });
