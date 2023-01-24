@@ -2,6 +2,7 @@ function achievementPicker() {
     document.location.replace("/achievement-picker");
 }
 
+
 document.querySelector(".card1").addEventListener("click", achievementPicker);
 document.querySelector(".card2").addEventListener("click", achievementPicker);
 document.querySelector(".card3").addEventListener("click", achievementPicker);
@@ -35,3 +36,11 @@ async function  getgamenameandimage() {
 }
 
 getgamenameandimage()
+
+card1BtnEl.addEventListener("click", getAchievementByGame);
+card2BtnEl.addEventListener("click", getAchievementByGame);
+card3BtnEl.addEventListener("click", getAchievementByGame);
+card4BtnEl.addEventListener("click", getAchievementByGame);
+
+// randomly pick 4 games from ownedgame table in db
+
