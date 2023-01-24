@@ -4,7 +4,6 @@ const sequelize = require(".././config/connection");
 const withAuth = require("../utils/auth");
 
 router.get("/", async(req, res) => {
-    
   res.render("landing-page", {
     loggedIn: req.session.loggedIn,
   });
