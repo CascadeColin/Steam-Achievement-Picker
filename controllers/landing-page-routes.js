@@ -39,6 +39,8 @@ router.get("/signup", (req, res) => {
   res.render("signup");
 });
 
+router.get("/single-achievement", (req,res) => res.render("single-achievement"));
+
 // if any other route typed in URL, render homepage
 
 // router.get("*", (req, res) => {
