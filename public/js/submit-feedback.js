@@ -1,11 +1,17 @@
+const achievement_id = window.location.toString().split('/')[
+    window.location.toString().split('/').length - 1
+];
+console.log(achievement_id)
+
 async function feedbackFormHandler(event) {
     event.preventDefault();
 
-    const feedback_text = document.querySelector('input[name="feedback-text"]').value.trim();
+    const feedback_text = document.querySelector('#feeback_text').value.trim();
 
     const achievement_id = window.location.toString().split('/')[
         window.location.toString().split('/').length - 1
     ];
+    console.log(achievement_id)
 
     if (feedback_text) {
         const response = await fetch('/api/feedback', {

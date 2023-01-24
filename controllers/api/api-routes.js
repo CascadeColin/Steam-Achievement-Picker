@@ -68,6 +68,9 @@ router.get("/feedback", async (req, res) => {
   }
 });
 
+// TODO: post feedback to db
+// router.post("/feedback", async (req,res) => {})
+
 router.get("/single-achievement", async (req, res) => {
   try {
     const data = await achievement.findOne({
