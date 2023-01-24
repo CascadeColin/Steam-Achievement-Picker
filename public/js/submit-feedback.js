@@ -35,4 +35,4 @@ async function feedbackFormHandler(event) {
     }
 }
 
-document.querySelector('.feedback-form-container').addEventListener('submit', feedbackFormHandler);
+document.querySelector('.submit_btn').addEventListener('submit', feedbackFormHandler);
