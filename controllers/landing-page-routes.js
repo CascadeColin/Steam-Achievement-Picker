@@ -78,7 +78,9 @@ router.get("/achievements", withAuth, async (req, res) => {
   const getGameNames = games.map(game => {
     return {
       name: game.dataValues.name,
-      game_id: game.dataValues.id
+      game_id: game.dataValues.id,
+      url: game.dataValues.img_icon_url,
+      appid: game.dataValues.appid
     }
   })
 
@@ -104,6 +106,7 @@ router.get("/achievements", withAuth, async (req, res) => {
     for (const obj of getGameNames) {
       if (a.game_id === obj.game_id) {
         a.gamename = obj.name;
+        a.url = `https://media.steampowered.com/steamcommunity/public/images/apps/${obj.appid}/${obj.url}.jpg`;
       }
     }
     return a;
