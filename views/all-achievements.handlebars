@@ -4,7 +4,7 @@
   <div class="title-div my-5">
     <h2 class="font-bold text-xl">My Achievements</h2>
   </div>
-  <div class="game-images-container flex flex-row my-10">
+  {{! <div class="game-images-container flex flex-row my-10">
     <img
       src="/images/The Witcher- Enhanced Edition (1).png"
       src="/images/The Witcher- Enhanced Edition (1).png"
@@ -63,13 +63,18 @@
       class="game-image mx-5"
 >>>>>>> Stashed changes
     />
-  </div>
+  </div> }}
   {{#each renderAchievements as |achievement|}}
     <div
       class="achievement-name-container flex border rounded bg-white shadow-lg p-3 my-2 mx-5"
     >
       <h4>Game Name: {{achievement.gamename}} </h4>
       <h4>Achievement Name: {{achievement.name}}</h4>
+      <img
+        src={{achievement.url}}
+        alt="Holly Knight game logo"
+        class="game-image mx-5"
+      />
     </div>
   {{/each}}
 </div>
