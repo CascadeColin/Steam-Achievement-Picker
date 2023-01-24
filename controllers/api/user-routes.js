@@ -147,7 +147,6 @@ router.post("/signup", async (req, res) => {
       res.status(200).json(dbUserData);
     });
   } catch (err) {
-    console.log(err);
     res.status(500).json(err);
   }
 });
@@ -166,7 +165,6 @@ router.post("/login", async (req, res) => {
         user_id: dbUserData.dataValues.id
       }
     });
-    console.log(dbGameData)
 
     const appidArr = dbGameData.map((games) => games.dataValues.id);
     const appidFormatted = appidArr.map(id => {
@@ -179,7 +177,6 @@ router.post("/login", async (req, res) => {
       },
     });
 
-    // console.dir(achievements)
     const formattedAchievements = achievements.map(data => {
       return data = data.dataValues
     })
@@ -211,7 +208,6 @@ router.post("/login", async (req, res) => {
         .json({ user: dbUserData, message: "You are now logged in!" });
     });
   } catch (err) {
-    console.log(err);
     res.status(500).json(err);
   }
 });
