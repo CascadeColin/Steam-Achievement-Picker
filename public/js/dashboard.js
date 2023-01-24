@@ -13,3 +13,5 @@ card1BtnEl.addEventListener("click", getAchievementByGame);
 card2BtnEl.addEventListener("click", getAchievementByGame);
 card3BtnEl.addEventListener("click", getAchievementByGame);
 card4BtnEl.addEventListener("click", getAchievementByGame);
+
+// randomly pick 4 games from ownedgame table in db
