@@ -44,7 +44,10 @@ router.get("/dashboard", withAuth, async (req, res) => {
     game2url: `https://media.steampowered.com/steamcommunity/public/images/apps/${randomGame[1].dataValues.appid}/${randomGame[1].dataValues.img_icon_url}.jpg`,
     game3url: `https://media.steampowered.com/steamcommunity/public/images/apps/${randomGame[2].dataValues.appid}/${randomGame[2].dataValues.img_icon_url}.jpg`,
     game4url: `https://media.steampowered.com/steamcommunity/public/images/apps/${randomGame[3].dataValues.appid}/${randomGame[3].dataValues.img_icon_url}.jpg`,
-    game1appid: randomGame[0].dataValues.appid
+    game1appid: randomGame[0].dataValues.appid,
+    game2appid: randomGame[1].dataValues.appid,
+    game3appid: randomGame[2].dataValues.appid,
+    game4appid: randomGame[3].dataValues.appid,
   }
 
   res.render("dashboard", {
