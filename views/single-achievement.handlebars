@@ -5,7 +5,7 @@
   >
     <div class="flex border rounded bg-white shadow-lg p-3">
       <i class="fa-sharp fa-solid fa-shield-halved"></i>
-      <h3>  {{achievements.name}}  </h3>
+      <h3 class="text-2xl">  {{achievements.name}}  </h3>
       <i class="fa-sharp fa-solid fa-shield-halved"></i>
     </div>
   </div>
@@ -13,12 +13,12 @@
     class="single-achievement-container flex flex-col justify-center items-center mt-12 mb-5"
   >
     <div class="flex border-b-2 p-3">
-      <h3> Achievement Comments </h3>
+      <h2 class="text-2xl"> Achievement Comments </h2>
     </div>
   </div>
   {{#each renderComments as |comment|}}
   <div
-    class="single-achievement-container flex flex-col justify-center items-center border rounded bg-white"
+    class="single-achievement-container flex flex-col justify-center items-center"
   >
     <div class="flex shadow-lg p-3">
       <h3>Comment: {{comment.comment_body}} </h3>
@@ -28,7 +28,7 @@
     <div
     class="single-achievement-container flex flex-col justify-center items-center "
   >
-    <div class="flex p-3 mb-10">
+    <div class="flex p-3 mb-5">
 
       <p>Posted by user: {{comment.user_id}} at {{comment.createdAt}}</p>
     </div>
