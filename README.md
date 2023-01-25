@@ -35,7 +35,7 @@ SO THAT I don’t have to spend my time deciding what to play and I can just pla
 ```
 GIVEN a game achievement recommendation application
 WHEN I visit the site for the first time
-THEN I am presented with the landing page with a nav bar with link to login
+THEN I am presented with the landing page with a nav bar with a link to login
 WHEN I click the link to login
 THEN I am prompted to either sign up or sign in
 WHEN I choose to sign up
@@ -56,7 +56,7 @@ WHEN I click on the Add Feedback button
 THEN that feedback is saved, and I will be able to see this feedback when I revisit the site at a later time
 ```
 ## Installation
-TO DO
+We installed the following packages in our application: bcrypt, dotenv, connect-session-sequelize, express, express-handlebars, express-session, handlebars, mysql2, node-fetch, sequelize.
 
 ## Usage
 
@@ -67,11 +67,11 @@ TO DO
 **Step 5:** To save your feedback, click on the Add Feedback button<br>
 **Step 5:** To logout, click on the logout link in the nav bar<br>
 
-[Here is the link to the Vapour application.](https://vapour-for-gamers.herokuapp.com/)
+[Here is the link to the Vapour application.](https://vapour-for-gamers.herokuapp.com/) <br>
 [Link to the repository](https://github.com/CascadeColin/Steam-Achievement-Picker)
 
 Below is an image of the landing page of the application.
-![Steam Achievement Picker landing page screenshot]()
+![Steam Achievement Picker landing page screenshot](public/images/landing-page-screenshot.png)
 
 ## Credits
 
