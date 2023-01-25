@@ -4,7 +4,7 @@ async function feedbackFormHandler(event) {
     const comment_body = document.querySelector('#feeback_text').value.trim();
 
     // parse URL to get achievement id
-    const achievement_id = window.location.href.slice(59)
+    const achievement_id = window.location.href.slice(41)
     console.log(typeof comment_body,typeof achievement_id)
 
 
