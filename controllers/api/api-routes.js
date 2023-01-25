@@ -59,7 +59,7 @@ router.get("/ownedgames", async (req, res) => {
   }
 });
 
-router.get("/feedback", async (req, res) => {
+router.get("/feedback/", async (req, res) => {
   try {
     res.status(200).json(await feedback.findAll());
   } catch (err) {
@@ -76,29 +76,20 @@ router.post("/feedback", async (req,res) => {
         steam_id: steam_id,
       },
     });
-    const newComment = await feedback.create({
-      //FIXME: link to corrent data once it's built in FE
-      comment_body: req.body,
-      // FIXME: find a way to link this
-      achievement_id: 1,
-      user_id: currentUser.dataValues.id
-    })
+
+    req.body.user_id = currentUser.dataValues.id;
+    console.log(req.body)
+    const data = await feedback.create({
+        comment_body: req.body.comment_body,
+        achievement_id: req.body.achievement_id,
+        user_id: req.body.user_id
+    });
+    console.log(data)
+    res.status(200).json(data);
   } catch (err) {
     res.status(500).json(err);
   }
 })
-
-router.get("/single-achievement", async (req, res) => {
-  try {
-    const data = await achievement.findOne({
-      where: {
-        // something in req.body, waiting for FE code to parse it
-      },
-    });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
 
 /* These are still in development and are not part of initial launch */
 

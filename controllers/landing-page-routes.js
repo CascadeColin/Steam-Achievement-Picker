@@ -99,9 +99,6 @@ router.get("/achievements", withAuth, async (req, res) => {
   shuffle(renderAchievementsUnsliced);
   const renderAchievement = renderAchievementsUnsliced.slice(0,5);
 
-  // console.log(getGameNames)
-  // console.log(renderAchievement)
-
   const renderAchievements = renderAchievement.map(a => {
     for (const obj of getGameNames) {
       if (a.game_id === obj.game_id) {
@@ -184,10 +181,32 @@ router.get("/signup", (req, res) => {
   res.render("signup");
 });
 
-router.get("/single-achievement", (req,res) => {
-  res.render("single-achievement", {
-    loggedIn: req.session.loggedIn,
-  });
+router.get("/single-achievement/:id", async (req, res) => {
+  try {
+    const data = await achievement.findOne({
+      where: {
+        id: req.params.id
+      },
+    });
+    const achievements = data.dataValues;
+    const comments = await feedback.findAll({
+      where: {
+        achievement_id: req.params.id
+      }
+    })
+    // console.log(comments)
+    const renderComments = comments.map(c => {
+      return c = c.dataValues;
+    })
+    console.log(renderComments)
+    res.status(200).render("single-achievement", {
+      renderComments,
+      achievements,
+      loggedIn: req.session.loggedIn,
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 // if any other route typed in URL, render homepage
