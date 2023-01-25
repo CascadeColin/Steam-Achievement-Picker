@@ -12,7 +12,7 @@ feedback.init(
       autoIncrement: true,
     },
     comment_body: {
-      type: DataTypes.TEXT,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     achievement_id: {
@@ -26,14 +26,6 @@ feedback.init(
       type: DataTypes.INTEGER,
       references: {
         model: "user",
-        key: "id",
-      },
-    },
-    achievement_id: {
-      type: DataTypes.INTEGER,
-      references: {
-        // id for the achivement and also the model name for the achivements
-        model: "achievement",
         key: "id",
       },
     },
