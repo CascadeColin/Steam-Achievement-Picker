@@ -7,8 +7,12 @@ img.gif {
 img.game-image {
   height: 110px;
   width: 120px;
-  animation-duration: 2.5s;
-  animation-name: slidein;
+
+}
+
+.achievement-name-container {
+    animation-duration: 2.5s;
+    animation-name: slidein;
 }
 
 img.dashboard-game-image {
