@@ -1,24 +1,20 @@
-const achievement_id = window.location.toString().split('/')[
-    window.location.toString().split('/').length - 1
-];
-console.log(achievement_id)
-
 async function feedbackFormHandler(event) {
     event.preventDefault();
 
-    const feedback_text = document.querySelector('#feeback_text').value.trim();
+    const comment_body = document.querySelector('#feeback_text').value.trim();
 
-    const achievement_id = window.location.toString().split('/')[
-        window.location.toString().split('/').length - 1
-    ];
-    console.log(achievement_id)
+    // parse URL to get achievement id
+    const achievement_id = window.location.href.slice(59)
+    console.log(typeof comment_body,typeof achievement_id)
 
-    if (feedback_text) {
+
+    if (comment_body) {
         const response = await fetch('/api/feedback', {
             method: 'POST',
             body: JSON.stringify({
+                comment_body,
                 achievement_id,
-                feedback_text
+                
             }),
             headers: {
                 'Content-Type': 'application/json'
@@ -35,4 +31,5 @@ async function feedbackFormHandler(event) {
     }
 }
 
-document.querySelector('.submit_btn').addEventListener('submit', feedbackFormHandler);
+const btn = document.querySelector('#submit_btn')
+btn.addEventListener('click', feedbackFormHandler);

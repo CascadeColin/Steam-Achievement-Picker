@@ -68,9 +68,20 @@ router.get("/achievements", withAuth, async (req, res) => {
       user_id: User.dataValues.id
     }
   })
-
   const game_ids = games.map(game => {
-    return {game_id: game.dataValues.id}
+    return {
+      // name: game.dataValues.name,
+      game_id: game.dataValues.id
+    }
+  })
+
+  const getGameNames = games.map(game => {
+    return {
+      name: game.dataValues.name,
+      game_id: game.dataValues.id,
+      url: game.dataValues.img_icon_url,
+      appid: game.dataValues.appid
+    }
   })
 
   const achs = await achievement.findAll({
@@ -79,10 +90,25 @@ router.get("/achievements", withAuth, async (req, res) => {
       [Op.or]: game_ids
     }
   })
-  const renderAchievements = achs.map(a => {
+  
+  const renderAchievementsUnsliced = achs.map(a => {
     return a = a.dataValues;
   })
-  
+
+  // shuffle the array, then slice to get the first 5
+  shuffle(renderAchievementsUnsliced);
+  const renderAchievement = renderAchievementsUnsliced.slice(0,5);
+
+  const renderAchievements = renderAchievement.map(a => {
+    for (const obj of getGameNames) {
+      if (a.game_id === obj.game_id) {
+        a.gamename = obj.name;
+        a.url = `https://media.steampowered.com/steamcommunity/public/images/apps/${obj.appid}/${obj.url}.jpg`;
+      }
+    }
+    return a;
+  });
+console.log(renderAchievements)
   res.render("all-achievements", {
     renderAchievements,
     loggedIn: req.session.loggedIn,
@@ -155,10 +181,32 @@ router.get("/signup", (req, res) => {
   res.render("signup");
 });
 
-router.get("/single-achievement", (req,res) => {
-  res.render("single-achievement", {
-    loggedIn: req.session.loggedIn,
-  });
+router.get("/single-achievement/:id", async (req, res) => {
+  try {
+    const data = await achievement.findOne({
+      where: {
+        id: req.params.id
+      },
+    });
+    const achievements = data.dataValues;
+    const comments = await feedback.findAll({
+      where: {
+        achievement_id: req.params.id
+      }
+    })
+    // console.log(comments)
+    const renderComments = comments.map(c => {
+      return c = c.dataValues;
+    })
+    console.log(renderComments)
+    res.status(200).render("single-achievement", {
+      renderComments,
+      achievements,
+      loggedIn: req.session.loggedIn,
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 // if any other route typed in URL, render homepage

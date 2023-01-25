@@ -1,12 +1,27 @@
-function getAchievementByGame() {
-    // fetch all achievements from that game
-    // filter out incompleted games, so only completed achievements are left
-    // pick a random achievement from that list/array
-    // fetch("api/achievements").then(function (response) {
-    //     return response.json();
-    //   })
+const appidnumber ='0';
+var game1EL = document.querySelector(".achievementname");
+async function getrandomegameandachievement () {
+//   try {
+//     const res = await fetch("/api/ownedgames");
+//     const data = await res.json();
+//     for (let i = 0; i < data.lenght; i++) {
+//         const appidsforgame = [];
+//         appidsforgame = data[i].appid;
+//     }
+//     let appidnumber = Math.floor(Math.random() * data.lenght);
+//     console.log(appidnumber)
+//   } catch (err) {
+//     console.log(err);
+//   }
+
+try {
+    const res = await fetch("api/achievements");
+    const data = await res.json();
+    achievement1name = data[0].name;
+    game1EL.textContent=achievement1name;
+} catch (err) {
+    console.log(err);
+};
 }
 
-
-getAchievementByGame()
-
+getrandomegameandachievement()

@@ -2,7 +2,6 @@ function randomAchievementPicker() {
     document.location.replace("/random-achievement-picker");
 }
 function achievementPicker(e) {
-    console.log(e.target.dataset.appid);
     document.location.replace(`/achievement-picker/${e.target.dataset.appid}`);
 }
 
