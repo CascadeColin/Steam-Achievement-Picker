@@ -5,17 +5,44 @@
   >
     <div class="flex border rounded bg-white shadow-lg p-3">
       <i class="fa-sharp fa-solid fa-shield-halved"></i>
-      <h3>{{achievement.name}}</h3>
+      <h3> {{achievements.name}} </h3>
       <i class="fa-sharp fa-solid fa-shield-halved"></i>
     </div>
   </div>
+  <div
+    class="single-achievement-container flex flex-col justify-center items-center mt-12 mb-5"
+  >
+    <div class="flex border rounded bg-white shadow-lg p-3">
+      <h3> Achievement Comments </h3>
+    </div>
+  </div>
+  {{#each renderComments as |comment|}}
+  <div
+    class="single-achievement-container flex flex-col justify-center items-center "
+  >
+    <div class="flex border rounded bg-white shadow-lg p-3">
+      <h3>Comment: {{comment.comment_body}} </h3>
+      
+    </div>
+  </div>
+    <div
+    class="single-achievement-container flex flex-col justify-center items-center "
+  >
+    <div class="flex border rounded bg-white shadow-lg p-3 mb-10">
+
+      <p>Posted by user: {{comment.user_id}} at {{comment.createdAt}}</p>
+    </div>
+  </div>
+  {{/each}}
 
   <!-- this container is for the note text box -->
   <form class="note-form-container flex flex-col justify-center items-center">
-    <div class="w-1/2" id="feeback_text">
+    <div class="w-1/2" >
+      <h4>Share a comment about this achievement!</h4>
       <textarea
         name="note-body"
         class="flex border rounded bg-white shadow-lg p-3 w-full"
+        id="feeback_text"
       ></textarea>
     </div>
 
