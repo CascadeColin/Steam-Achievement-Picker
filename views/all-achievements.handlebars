@@ -66,13 +66,10 @@
   </div> }}
   {{#each renderAchievements as |achievement|}}
     <div
-      class="achievement-name-container flex border rounded bg-white shadow-lg p-3 my-2 mx-5" data-id={{achievement.id}}
+      class="achievement-name-container flex-col flex border rounded bg-white shadow-lg p-3 my-2 mx-5" data-id={{achievement.id}}
     >
-<<<<<<< Updated upstream
-      <h4>{{achievement.name}}</h4>
-=======
-      <h4 class="text-cyan-400">Game Name: {{achievement.gamename}} </h4>
-      <h4 class="text-fuchsia-400">Achievement Name: {{achievement.name}}</h4>
+      <h4  data-id={{achievement.id}}>Game Name: {{achievement.gamename}} </h4>
+      <h4  data-id={{achievement.id}}>Achievement Name: {{achievement.name}}</h4>
       <img
         src={{achievement.url}}
         alt="Holly Knight game logo"
